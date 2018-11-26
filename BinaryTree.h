@@ -9,6 +9,9 @@
 // tom bailey   0820  18 oct 2010
 // tom bailey   0850  4 apr 2011
 
+// Edited by Jacob Williams for COSC 2030 lab 8
+// 11/26/2018
+
 
 #ifndef _BIN_TREE_H_
 #define _BIN_TREE_H_
@@ -366,31 +369,38 @@ void
 }
 
 
-long 
-   BinaryTree:: size( const BinaryNode * subtree )
-{
-   return  -1;
+// Jagadish helped me with the first line!
+long BinaryTree:: size( const BinaryNode * subtree ) {
+    if (subtree == NULL) return 0;
+    return 1 + size(subtree->left_) + size(subtree->right_);
 }
 
 
-long 
-   BinaryTree:: height( const BinaryNode * subtree )
-{
-   return  -2;
+// GeeksForGeeks tutorial utilized to help with pseudocode:
+// "Write a program to find the maximum depth of a binary tree."
+long BinaryTree:: height( const BinaryNode * subtree ) {
+    if (subtree == NULL) return 0;
+    long leftHeight = height(subtree->left_);
+    long rightHeight = height(subtree->right_);
+    long theHeight = (leftHeight >= rightHeight) ? 1 + leftHeight : 1 + rightHeight;
+    return theHeight;
 }
 
 
-long 
-   BinaryTree:: leaves( const BinaryNode * subtree )
-{
-   return  -3;
+long BinaryTree:: leaves( const BinaryNode * subtree ) {
+    if (subtree == NULL) return 0; // for empty tree
+    if (subtree->left_ == NULL && subtree->right_ == NULL) return 1;
+    long leftLeaf = leaves(subtree->left_);
+    long rightLeaf = leaves(subtree->right_);
+
+    return leftLeaf + rightLeaf;
 }
 
 
-short 
-   BinaryTree:: leftmost( const BinaryNode * subtree )
-{
-   return -4;
+short BinaryTree:: leftmost( const BinaryNode * subtree ) {
+    if (subtree == NULL) return 0; // for empty tree
+    if (subtree->left_ == NULL) return subtree->entry_;
+    leftmost(subtree->left_);
 }
 
 
