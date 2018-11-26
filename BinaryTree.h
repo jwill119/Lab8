@@ -109,6 +109,8 @@ public:
 
    std::vector< short > preorder() const;
 
+   std::vector<short> postorder() const;
+
 
 private:
    BinaryNode * tree_;
@@ -187,7 +189,13 @@ private:
    //   values in preorder.
    static void preorder( std::vector< short > & traversal, 
       const BinaryNode * subtree );
+
+
+    // Copy this but for the postorder traversal.
+    static void postorder(std::vector<short> & traversal,
+            const BinaryNode * subtree);
 };
+
 
 
 // Set the initial value of the static binary tree entry.
@@ -287,6 +295,13 @@ std::vector< short >
    std::vector< short > traversal;
    preorder( traversal, tree_ );
    return traversal;
+}
+
+// Add postorder function
+std::vector<short> BinaryTree::postorder() const {
+    std::vector<short> traversal;
+    postorder(traversal, tree_);
+    return traversal;
 }
 
 
@@ -404,16 +419,22 @@ short BinaryTree:: leftmost( const BinaryNode * subtree ) {
 }
 
 
-void
-   BinaryTree:: preorder( std::vector< short > & traversal, 
-      const BinaryNode * subtree )
-{
-   if( subtree != NULL )
-   {
-      traversal.push_back( subtree->entry_ );
-      preorder( traversal, subtree->left_ );
-      preorder( traversal, subtree->right_ );
-   }
+void BinaryTree::preorder(std::vector<short> & traversal, 
+      const BinaryNode * subtree ) {
+    if( subtree != NULL ) {
+        traversal.push_back( subtree->entry_ );
+        preorder( traversal, subtree->left_ );
+        preorder( traversal, subtree->right_ );
+    }
+}
+
+void BinaryTree::postorder(std::vector<short> & traversal,
+        const BinaryNode * subtree) {
+    if (subtree != NULL) {
+        postorder(traversal, subtree->left_);
+        postorder(traversal, subtree->right_);
+        traversal.push_back(subtree->entry_);
+    }
 }
 
 #endif
